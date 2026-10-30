@@ -6,7 +6,8 @@ function FilaProducto({ producto }) {
   return (
     <tr>
       <td>{producto.nombre}</td>
-      <td>{producto.categoria}</td>
+      <td>{producto.marca}</td>
+      <td>{producto.tipo}</td>
       <td className="numero">{formatearPrecio(producto.precio)}</td>
       <td className="numero">{producto.stock}</td>
       <td>

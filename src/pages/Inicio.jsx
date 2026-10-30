@@ -22,7 +22,8 @@ function Inicio() {
           <thead>
             <tr>
               <th>Producto</th>
-              <th>Categoría</th>
+              <th>Marca</th>
+              <th>Tipo</th>
               <th className="numero">Precio</th>
               <th className="numero">Stock</th>
               <th>Estado</th>
