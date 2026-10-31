@@ -10,24 +10,24 @@ function Inicio() {
 
   return (
     <section>
-      <h2>Inventario</h2>
+      <h2 className="mb-4 text-xl font-semibold">Inventario</h2>
 
-      <div className="resumen">
+      <div className="mb-6 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">
         <TarjetaResumen titulo="Productos" valor={productos.length} />
         <TarjetaResumen titulo="Stock bajo" valor={stockBajo} variante="bajo" />
         <TarjetaResumen titulo="Agotados" valor={agotados} variante="agotado" />
       </div>
 
-      <div className="tabla-contenedor">
-        <table className="tabla-inventario">
+      <div className="overflow-x-auto rounded-lg border border-borde bg-superficie">
+        <table className="w-full">
           <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Marca</th>
-              <th>Tipo</th>
-              <th className="numero">Precio</th>
-              <th className="numero">Stock</th>
-              <th>Estado</th>
+            <tr className="text-sm text-texto-suave *:border-b *:border-borde *:px-3 *:py-2.5 *:font-semibold">
+              <th className="text-left">Producto</th>
+              <th className="text-left">Marca</th>
+              <th className="text-left">Tipo</th>
+              <th className="text-right">Precio</th>
+              <th className="text-right">Stock</th>
+              <th className="text-left">Estado</th>
             </tr>
           </thead>
           <tbody>
