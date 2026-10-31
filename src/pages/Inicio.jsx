@@ -1,9 +1,10 @@
-import productos from '../data/productos.js'
+import { useInventario } from '../context/useInventario.js'
 import FilaProducto from '../components/FilaProducto.jsx'
 import { STOCK_MINIMO } from '../utils/inventario.js'
 import TarjetaResumen from '../components/TarjetaResumen.jsx'
 
 function Inicio() {
+  const { productos } = useInventario()
   const agotados = productos.filter((p) => p.stock === 0).length
   const stockBajo = productos.filter((p) => p.stock > 0 && p.stock < STOCK_MINIMO).length
 
