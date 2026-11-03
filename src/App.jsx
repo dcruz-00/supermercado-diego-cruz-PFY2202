@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import MenuInferior from './components/MenuInferior.jsx'
+import MenuInventario from './components/MenuInventario.jsx'
 import Inicio from './pages/Inicio.jsx'
 import ListadoInventario from './pages/ListadoInventario.jsx'
 import AgregarArticulo from './pages/AgregarArticulo.jsx'
@@ -15,6 +16,7 @@ function App() {
         <p className="mt-1 opacity-85">Gestión de inventario</p>
       </header>
 
+      <MenuInventario />
       {/* pb-22 deja espacio para que el menú inferior fijo no tape el contenido */}
       <main className="mx-auto max-w-240 px-4 pt-6 pb-22">
         <Routes>
