@@ -13,7 +13,7 @@ function MenuInferior() {
       className="fixed inset-x-0 bottom-0 flex h-16 border-t border-borde bg-superficie"
       aria-label="Navegación principal"
     >
-      <NavLink to="/" end className={clasesEnlace}>Inventario</NavLink>
+      <NavLink to="/" end className={clasesEnlace}>Inicio</NavLink>
       <NavLink to="/tiendas" className={clasesEnlace}>Nuestras tiendas</NavLink>
       <NavLink to="/preguntas-frecuentes" className={clasesEnlace}>Preguntas frecuentes</NavLink>
     </nav>

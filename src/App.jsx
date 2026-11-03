@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import MenuInferior from './components/MenuInferior.jsx'
 import Inicio from './pages/Inicio.jsx'
+import ListadoInventario from './pages/ListadoInventario.jsx'
 import NuestrasTiendas from './pages/NuestrasTiendas.jsx'
 import PreguntasFrecuentes from './pages/PreguntasFrecuentes.jsx'
 import NoEncontrado from './pages/NoEncontrado.jsx'
@@ -17,6 +18,7 @@ function App() {
       <main className="mx-auto max-w-240 px-4 pt-6 pb-22">
         <Routes>
           <Route path="/" element={<Inicio />} />
+          <Route path="/inventario" element={<ListadoInventario />} />
           <Route path="/tiendas" element={<NuestrasTiendas />} />
           <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
           <Route path="*" element={<NoEncontrado />} />
