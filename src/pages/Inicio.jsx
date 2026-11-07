@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useInventario } from '../context/useInventario.js'
 import { STOCK_MINIMO } from '../utils/inventario.js'
 import TarjetaResumen from '../components/TarjetaResumen.jsx'

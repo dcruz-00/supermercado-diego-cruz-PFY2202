@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router'
 import MenuInferior from './components/MenuInferior.jsx'
 import MenuInventario from './components/MenuInventario.jsx'
 import Inicio from './pages/Inicio.jsx'

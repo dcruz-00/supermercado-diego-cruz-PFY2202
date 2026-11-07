@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router'
 
 function clasesEnlace({ isActive }) {
   const base = 'flex flex-1 items-center justify-center px-2 text-center text-sm'
