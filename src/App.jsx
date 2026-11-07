@@ -1,37 +1,7 @@
-import { Routes, Route } from 'react-router'
-import MenuInferior from './components/MenuInferior.jsx'
-import MenuInventario from './components/MenuInventario.jsx'
-import Inicio from './pages/Inicio.jsx'
-import ListadoInventario from './pages/ListadoInventario.jsx'
-import AgregarArticulo from './pages/AgregarArticulo.jsx'
-import NuestrasTiendas from './pages/NuestrasTiendas.jsx'
-import PreguntasFrecuentes from './pages/PreguntasFrecuentes.jsx'
-import NoEncontrado from './pages/NoEncontrado.jsx'
+import AppRoutes from './routes/AppRoutes.jsx'
 
 function App() {
-  return (
-    <>
-      <header className="bg-primario px-6 py-4 text-white">
-        <h1 className="text-2xl font-bold">SuperStock</h1>
-        <p className="mt-1 opacity-85">Gestión de inventario</p>
-      </header>
-
-      <MenuInventario />
-      {/* pb-22 deja espacio para que el menú inferior fijo no tape el contenido */}
-      <main className="mx-auto max-w-240 px-4 pt-6 pb-22">
-        <Routes>
-          <Route path="/" element={<Inicio />} />
-          <Route path="/inventario" element={<ListadoInventario />} />
-          <Route path="/inventario/agregar" element={<AgregarArticulo />} />
-          <Route path="/tiendas" element={<NuestrasTiendas />} />
-          <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
-          <Route path="*" element={<NoEncontrado />} />
-        </Routes>
-      </main>
-
-      <MenuInferior />
-    </>
-  )
+  return <AppRoutes />
 }
 
 export default App
