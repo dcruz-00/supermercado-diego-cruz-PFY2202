@@ -23,6 +23,9 @@ function ListadoInventario() {
     setParametros(nuevoTipo === '' ? {} : { tipo: nuevoTipo }, { replace: true })
   }
 
+  // Dirección actual del listado (con filtro) para volver a ella desde el detalle.
+  const volverA = tipo === '' ? '/inventario' : `/inventario?${parametros}`
+
   return (
     <section>
       <h2 className="mb-1 text-xl font-semibold">Listado de inventario</h2>
@@ -50,7 +53,7 @@ function ListadoInventario() {
           </thead>
           <tbody>
             {visibles.map((producto) => (
-              <FilaProducto key={producto.id} producto={producto} />
+              <FilaProducto key={producto.id} producto={producto} volverA={volverA} />
             ))}
             {visibles.length === 0 && (
               <tr>

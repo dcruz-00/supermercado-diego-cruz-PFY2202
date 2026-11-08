@@ -3,6 +3,7 @@ import LayoutPrincipal from '../layouts/LayoutPrincipal.jsx'
 import Inicio from '../pages/Inicio.jsx'
 import ListadoInventario from '../pages/ListadoInventario.jsx'
 import AgregarArticulo from '../pages/AgregarArticulo.jsx'
+import DetalleArticulo from '../pages/DetalleArticulo.jsx'
 import NuestrasTiendas from '../pages/NuestrasTiendas.jsx'
 import PreguntasFrecuentes from '../pages/PreguntasFrecuentes.jsx'
 import NoEncontrado from '../pages/NoEncontrado.jsx'
@@ -19,6 +20,8 @@ function AppRoutes() {
         <Route path="inventario">
           <Route index element={<ListadoInventario />} />
           <Route path="agregar" element={<AgregarArticulo />} />
+          {/* :id es un parámetro dinámico; DetalleArticulo lo lee con useParams */}
+          <Route path=":id" element={<DetalleArticulo />} />
         </Route>
 
         <Route path="tiendas" element={<NuestrasTiendas />} />
