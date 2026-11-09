@@ -7,7 +7,8 @@ import InventarioProvider from './context/InventarioProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    {/* basename: las rutas de React Router viven bajo el mismo prefijo que define `base` en vite.config.js */}
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <InventarioProvider>
         <App />
       </InventarioProvider>
