@@ -4,6 +4,7 @@ import Inicio from '../pages/Inicio.jsx'
 import ListadoInventario from '../pages/ListadoInventario.jsx'
 import AgregarArticulo from '../pages/AgregarArticulo.jsx'
 import DetalleArticulo from '../pages/DetalleArticulo.jsx'
+import Carrito from '../pages/Carrito.jsx'
 import NuestrasTiendas from '../pages/NuestrasTiendas.jsx'
 import PreguntasFrecuentes from '../pages/PreguntasFrecuentes.jsx'
 import NoEncontrado from '../pages/NoEncontrado.jsx'
@@ -24,6 +25,7 @@ function AppRoutes() {
           <Route path=":id" element={<DetalleArticulo />} />
         </Route>
 
+        <Route path="carrito" element={<Carrito />} />
         <Route path="tiendas" element={<NuestrasTiendas />} />
         <Route path="preguntas-frecuentes" element={<PreguntasFrecuentes />} />
         <Route path="*" element={<NoEncontrado />} />

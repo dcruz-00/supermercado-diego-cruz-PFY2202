@@ -85,7 +85,8 @@ function DetalleArticulo() {
 
         {agregado > 0 && (
           <p className="mt-4 rounded-md border border-primario px-4 py-3" role="status">
-            Se agregaron <strong>{agregado}</strong> unidad(es) al carrito.
+            Se agregaron <strong>{agregado}</strong> unidad(es) al carrito.{' '}
+            <Link to="/carrito" className="font-semibold text-primario underline">Ver carrito</Link>Se agregaron <strong>{agregado}</strong> unidad(es) al carrito.
           </p>
         )}
       </article>
