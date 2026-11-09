@@ -1,26 +1,49 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
+import CampoFormulario from '../components/CampoFormulario.jsx'
 import { TIPOS } from '../data/productos.js'
 import { useInventario } from '../context/useInventario.js'
 
 const FORMULARIO_VACIO = { nombre: '', marca: '', tipo: '', precio: '', stock: '' }
 
+// \p{L} = cualquier letra (incluye tildes y ñ), \p{N} = cualquier dígito; requieren la bandera u.
+// Debe empezar con letra o número y luego admite espacios y signos comunes en nombres de productos.
+const REGEX_NOMBRE = /^[\p{L}\p{N}][\p{L}\p{N} .,&'%/()-]{1,59}$/u // 2 a 60 caracteres
+const REGEX_MARCA = /^[\p{L}\p{N}][\p{L}\p{N} .&'-]{0,39}$/u // 1 a 40 caracteres
+// Solo dígitos: rechaza "1e3", "-5", "12.5" o " 7", que Number() sí convertiría.
+const REGEX_PRECIO = /^\d{1,7}$/ // CLP no usa decimales
+const REGEX_STOCK = /^\d{1,5}$/
+
 // Devuelve un objeto con un mensaje por cada campo inválido; vacío si todo está bien.
 function validar(formulario) {
   const errores = {}
-  if (formulario.nombre.trim() === '') errores.nombre = 'Ingresa el nombre.'
-  if (formulario.marca.trim() === '') errores.marca = 'Ingresa la marca.'
+  const nombre = formulario.nombre.trim()
+  const marca = formulario.marca.trim()
+
+  if (nombre === '') errores.nombre = 'Ingresa el nombre.'
+  else if (!REGEX_NOMBRE.test(nombre)) {
+    errores.nombre = 'Usa de 2 a 60 caracteres: letras, números, espacios y . , & \' % / ( ) -'
+  }
+
+  if (marca === '') errores.marca = 'Ingresa la marca.'
+  else if (!REGEX_MARCA.test(marca)) {
+    errores.marca = 'Usa hasta 40 caracteres: letras, números, espacios y . & \' -'
+  }
+
   if (!TIPOS.includes(formulario.tipo)) errores.tipo = 'Selecciona un tipo.'
-  if (formulario.precio === '' || !Number.isInteger(Number(formulario.precio)) || Number(formulario.precio) < 0) {
-    errores.precio = 'El precio debe ser un número entero mayor o igual a 0.'
+
+  // Precio: entero en pesos, al menos $1 (un producto a $0 no tiene sentido).
+  if (!REGEX_PRECIO.test(formulario.precio) || Number(formulario.precio) < 1) {
+    errores.precio = 'Ingresa un precio entero en pesos, entre 1 y 9.999.999 (sin puntos).'
   }
-  if (formulario.stock === '' || !Number.isInteger(Number(formulario.stock)) || Number(formulario.stock) < 0) {
-    errores.stock = 'El stock debe ser un número entero mayor o igual a 0.'
+
+  // Stock: cantidad entera de unidades; 0 es válido (producto agotado).
+  if (!REGEX_STOCK.test(formulario.stock)) {
+    errores.stock = 'Ingresa una cantidad entera entre 0 y 99.999.'
   }
+
   return errores
 }
-
-const CLASES_CAMPO = 'w-full rounded-md border border-borde bg-superficie px-3 py-2 focus:outline-2 focus:outline-primario'
 
 function AgregarArticulo() {
   const { agregarProducto } = useInventario()
@@ -55,7 +78,8 @@ function AgregarArticulo() {
 
   return (
     <section className="max-w-xl">
-      <h2 className="mb-4 text-xl font-semibold">Agregar artículo</h2>
+      <h2 className="mb-1 text-xl font-semibold">Agregar artículo</h2>
+      <p className="mb-4 text-sm text-texto-suave">Todos los campos son obligatorios.</p>
 
       {agregado && (
         <p className="mb-4 rounded-md border border-primario bg-superficie px-4 py-3" role="status">
@@ -64,42 +88,56 @@ function AgregarArticulo() {
         </p>
       )}
 
+      {/* noValidate: se usan los mensajes propios en vez de los globos del navegador;
+          required sigue informando a los lectores de pantalla que el campo es obligatorio. */}
       <form onSubmit={handleSubmit} noValidate className="space-y-4 rounded-lg border border-borde bg-superficie p-4">
-        <div>
-          <label htmlFor="nombre" className="mb-1 block text-sm font-semibold">Nombre</label>
-          <input id="nombre" name="nombre" value={formulario.nombre} onChange={handleChange} className={CLASES_CAMPO} />
-          {errores.nombre && <p className="mt-1 text-sm text-agotado">{errores.nombre}</p>}
-        </div>
+        <CampoFormulario
+          id="nombre"
+          etiqueta="Nombre"
+          value={formulario.nombre}
+          onChange={handleChange}
+          error={errores.nombre}
+          autoComplete="off"
+        />
 
-        <div>
-          <label htmlFor="marca" className="mb-1 block text-sm font-semibold">Marca</label>
-          <input id="marca" name="marca" value={formulario.marca} onChange={handleChange} className={CLASES_CAMPO} />
-          {errores.marca && <p className="mt-1 text-sm text-agotado">{errores.marca}</p>}
-        </div>
+        <CampoFormulario
+          id="marca"
+          etiqueta="Marca"
+          value={formulario.marca}
+          onChange={handleChange}
+          error={errores.marca}
+          autoComplete="off"
+        />
 
-        <div>
-          <label htmlFor="tipo" className="mb-1 block text-sm font-semibold">Tipo de producto</label>
-          <select id="tipo" name="tipo" value={formulario.tipo} onChange={handleChange} className={CLASES_CAMPO}>
-            <option value="">Selecciona un tipo</option>
-            {TIPOS.map((tipo) => (
-              <option key={tipo} value={tipo}>{tipo}</option>
-            ))}
-          </select>
-          {errores.tipo && <p className="mt-1 text-sm text-agotado">{errores.tipo}</p>}
-        </div>
+        <CampoFormulario
+          id="tipo"
+          etiqueta="Tipo de producto"
+          opciones={TIPOS}
+          value={formulario.tipo}
+          onChange={handleChange}
+          error={errores.tipo}
+        />
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="precio" className="mb-1 block text-sm font-semibold">Precio (CLP)</label>
-            <input id="precio" name="precio" type="number" min="0" step="1" value={formulario.precio} onChange={handleChange} className={CLASES_CAMPO} />
-            {errores.precio && <p className="mt-1 text-sm text-agotado">{errores.precio}</p>}
-          </div>
+          <CampoFormulario
+            id="precio"
+            etiqueta="Precio (CLP)"
+            inputMode="numeric"
+            value={formulario.precio}
+            onChange={handleChange}
+            error={errores.precio}
+            autoComplete="off"
+          />
 
-          <div>
-            <label htmlFor="stock" className="mb-1 block text-sm font-semibold">Stock</label>
-            <input id="stock" name="stock" type="number" min="0" step="1" value={formulario.stock} onChange={handleChange} className={CLASES_CAMPO} />
-            {errores.stock && <p className="mt-1 text-sm text-agotado">{errores.stock}</p>}
-          </div>
+          <CampoFormulario
+            id="stock"
+            etiqueta="Stock"
+            inputMode="numeric"
+            value={formulario.stock}
+            onChange={handleChange}
+            error={errores.stock}
+            autoComplete="off"
+          />
         </div>
 
         <button type="submit" className="rounded-md bg-primario px-4 py-2 font-semibold text-white hover:opacity-90">
